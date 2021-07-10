@@ -1,0 +1,11 @@
+{
+  "name": "Shinobi Replay",
+  "version": "1",
+  "slug": "shinobi_replay",
+  "description": "Get clips from shinobi monitors",
+  "startup": "before",
+  "boot": "auto",
+  "map": ["share:rw"],
+  "options": {},
+  "schema": {}
+}
