@@ -14,6 +14,7 @@ RUN node --version
 RUN apk add --no-cache jq yarn 
 RUN yarn install --production
 RUN yarn build
+RUN ls -al
 
 # Copy data for add-on
 COPY run.sh /
