@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "yarn esbuild --bundle --loader:.js=jsx --target=es2016 --platform=node --define:process.env.FLUENTFFMPEG_COV=0 server.ts --outfile=out.js",
-    "start": "yarn build && node out.js"
+    "start": "mkdir -p out && yarn build && node out.js"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.0.20",

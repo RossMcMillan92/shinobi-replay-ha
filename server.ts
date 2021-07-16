@@ -1,3 +1,4 @@
+import { addMinutes, isAfter, isValid, parseISO } from "date-fns"
 import { FastifyReply, FastifyRequest } from "fastify"
 import { readFile } from "fs"
 import { FileHandle } from "fs/promises"
@@ -6,6 +7,11 @@ import getReplay from "./replay"
 const fastify = require("fastify")({ logger: true })
 
 const cache: Record<string, Promise<unknown> | null> = {}
+
+const isDateString = (s: string) =>
+  /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}/.test(s)
+
+const isValidNumber = (n: string) => n === `${Number.parseFloat(n)}`
 
 // const apiUrl = `http://192.168.86.12:8080/c5482913e5ab68c7db95e308f91590ad/videos/rm/kitchen?end=${shiftedEndTime}&start=${shiftedStartTime}`
 const web = {
@@ -33,25 +39,38 @@ fastify.get(
   async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
     const { end, start } = request.params as Record<string, string>
     const fileName = `${start}-${end}.mp4`
-    const fullFileName = `${outputFolder}${fileName}.mp4`
-    const { data: video } = await getFile(fullFileName)
+    const fullFileName = `${outputFolder}${fileName}`
+    const { data: video, error: ve } = await getFile(fullFileName)
 
-    if (video) return reply.type("video/mp4").send(video)
+    if (video && !cache[fullFileName])
+      return reply.type("video/mp4").send(video)
 
-    console.log(
-      "🚀 ~ file: server.ts ~ line 70 ~ cache[fullFileName]",
-      cache[fullFileName]
+    if (!isDateString(start) && !isValidNumber(start))
+      return reply.status(500).send("Start date is not valid.")
+
+    if (!isDateString(end) && !isValidNumber(end))
+      return reply.status(500).send("End date is not valid.")
+
+    if (
+      isDateString(start) &&
+      isDateString(end) &&
+      isAfter(new Date(start), new Date(end))
     )
+      return reply.status(500).send("Start date cannot be after end date.")
 
     const getReplayPromise =
       cache[fullFileName] ??
       getReplay({
-        end: new Date(end),
+        end: isDateString(end)
+          ? new Date(end)
+          : addMinutes(new Date(), Number.parseFloat(end)),
         offset: 0,
         outputFolder,
         outputName: fileName,
         segmentLength: 5,
-        start: new Date(start),
+        start: isDateString(start)
+          ? new Date(start)
+          : addMinutes(new Date(), Number.parseFloat(start)),
         web,
       })
     cache[fullFileName] = getReplayPromise
@@ -70,7 +89,6 @@ fastify.get(
   }
 )
 
-// Run the server!
 const start = async () => {
   try {
     await fastify.listen(3232)
