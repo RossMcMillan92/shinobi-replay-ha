@@ -97,6 +97,7 @@ fastify.get(
 
 const start = async () => {
   try {
+    console.log("listening on 3821")
     await fastify.listen(3821)
   } catch (err) {
     fastify.log.error(err)
