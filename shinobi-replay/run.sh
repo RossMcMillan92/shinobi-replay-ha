@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-echo Hello!
+echo Starting Shinobi Replay!
 node -v
-npm -v
-yarn install --production
 yarn start
