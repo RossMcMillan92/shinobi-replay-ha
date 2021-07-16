@@ -1,15 +1,14 @@
 {
   "name": "Shinobi Replay",
-  "version": "2",
+  "version": "3",
   "slug": "shinobi_replay",
   "description": "Get clips from shinobi monitors",
-  "startup": "before",
+  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
+  "startup": "application",
   "boot": "auto",
-  "map": ["share:rw"],
   "options": {},
   "schema": {},
-  "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
   "ports": {
-    "3232/tcp": 3232
+    "3820/tcp": 3820
   }
 }
