@@ -1,8 +1,7 @@
 {
   "scripts": {
-    "build": "next build",
-    "dev": "next dev -p 3821",
-    "start": "next start -p 3821"
+    "build": "yarn esbuild --bundle --loader:.js=jsx --target=es2016 --platform=node --define:process.env.FLUENTFFMPEG_COV=0 server.ts --outfile=./out.js",
+    "start": "mkdir -p out && yarn build && node out.js"
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.0.20",
@@ -17,15 +16,11 @@
     "ffprobe": "^1.1.2",
     "fluent-ffmpeg": "^2.1.2",
     "isomorphic-unfetch": "^3.1.0",
-    "next": "^11.0.1",
     "ramda": "^0.27.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "typescript": "^4.3.5"
   },
   "devDependencies": {
     "@types/ffmpeg-installer__ffmpeg": "^1.0.0",
-    "@types/fluent-ffmpeg": "^2.1.18",
-    "@types/react": "^17.0.14"
+    "@types/fluent-ffmpeg": "^2.1.18"
   }
 }
