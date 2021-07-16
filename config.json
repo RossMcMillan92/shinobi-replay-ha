@@ -1,6 +1,6 @@
 {
   "name": "Shinobi Replay",
-  "version": "1",
+  "version": "2",
   "slug": "shinobi_replay",
   "description": "Get clips from shinobi monitors",
   "startup": "before",
