@@ -33,7 +33,13 @@ const getFile = (path: string): Promise<{ data?: FileHandle; error?: Error }> =>
     .then((data) => ({ data: data as FileHandle }))
     .catch((error) => ({ error }))
 
-// Declare a route
+fastify.get(
+  "/",
+  async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
+    reply.send("Working!")
+  }
+)
+
 fastify.get(
   "/replay/:start/:end",
   async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
@@ -91,7 +97,7 @@ fastify.get(
 
 const start = async () => {
   try {
-    await fastify.listen(3232)
+    await fastify.listen(3821)
   } catch (err) {
     fastify.log.error(err)
     process.exit(1)
