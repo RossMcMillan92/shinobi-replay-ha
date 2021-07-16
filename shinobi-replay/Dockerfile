@@ -17,8 +17,8 @@ RUN yarn build
 RUN ls -al
 
 # Copy data for add-on
-COPY run.sh /
-COPY out.js /
+ADD run.sh /
+ADD out.js /
 RUN chmod a+x /run.sh
 
 CMD [ "/run.sh" ]
