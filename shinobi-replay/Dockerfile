@@ -10,7 +10,7 @@ RUN node --version
 RUN apk add --no-cache jq yarn 
 
 COPY . .
-RUN yarn --forzen-lockfile
+RUN yarn --frozen-lockfile
 RUN yarn build
 
 # Copy data for add-on
