@@ -1,6 +1,6 @@
 {
   "name": "Shinobi Replay",
-  "version": "16",
+  "version": "17",
   "slug": "shinobi_replay",
   "description": "Get clips from shinobi monitors",
   "arch": ["armhf", "armv7", "aarch64", "amd64", "i386"],
