@@ -1,7 +1,6 @@
 import { addMinutes, isAfter, isValid, parseISO } from "date-fns"
 import { FastifyReply, FastifyRequest } from "fastify"
-import { readFile } from "fs"
-import { FileHandle } from "fs/promises"
+import { getFile } from "./utils/fs"
 import getReplay from "./replay"
 
 const fastify = require("fastify")({ logger: true })
@@ -21,24 +20,7 @@ const web = {
   monitorId: "poolroom",
 }
 
-const outputFolder = "out/"
-
-const getFile = (path: string): Promise<{ data?: FileHandle; error?: Error }> =>
-  new Promise((resolve, reject) => {
-    readFile(path, {}, (error, data) => {
-      if (error) return reject(error)
-      if (data) return resolve(data)
-    })
-  })
-    .then((data) => ({ data: data as FileHandle }))
-    .catch((error) => ({ error }))
-
-fastify.get(
-  "/",
-  async (request: FastifyRequest, reply: FastifyReply): Promise<void> => {
-    reply.send("Working!")
-  }
-)
+const outputFolder = "public/out/"
 
 fastify.get(
   "/replay/:start/:end",
