@@ -13,9 +13,9 @@ export const getFile = (
     .then((data) => ({ data: data as Buffer }))
     .catch((error) => ({ error }))
 
-export const readDirectory = (dirPath: string) =>
+export const readDirectory = (dirPath: string): Promise<string[]> =>
   new Promise((resolve, reject) =>
     readdir(path.resolve(process.cwd(), dirPath), {}, (error, files) =>
-      error ? reject(error) : resolve(files)
+      error ? reject(error) : resolve(files as string[])
     )
   )
