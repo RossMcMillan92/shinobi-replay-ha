@@ -132,9 +132,9 @@ const getReplay = ({
         })
         .on("end", function () {
           console.log("Processing finished !")
-          resolve(`${outputFolder}${outputName}`)
+          resolve(`/api/get-replay/${outputName}`)
         })
-        .mergeToFile(`/api/get-replay/${outputName}`)
+        .mergeToFile(`${outputFolder}${outputName}`)
     })
   })
 
