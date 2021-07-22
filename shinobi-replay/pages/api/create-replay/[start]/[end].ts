@@ -1,6 +1,7 @@
 import { addMinutes, isAfter } from "date-fns"
 import type { NextApiRequest, NextApiResponse } from "next"
 import getReplay from "../../../../replay"
+import { OUTPUT_FOLDER } from "../../../../settings"
 import { getFile } from "../../../../utils/fs"
 
 const isDateString = (s: string) =>
@@ -15,7 +16,6 @@ const web = {
   host: "http://192.168.86.12:8080",
   monitorId: "poolroom",
 }
-const outputFolder = "out/"
 
 type Data = string | Buffer
 
@@ -25,7 +25,7 @@ const handler = async (
 ) => {
   const { end, start } = request.query as { end: string; start: string }
   const fileName = `${start}-${end}.mp4`
-  const fullFileName = `${outputFolder}${fileName}`
+  const fullFileName = `${OUTPUT_FOLDER}${fileName}`
   const { data: video, error: ve } = await getFile(fullFileName)
 
   if (video && !cache[fullFileName]) return response.send(fullFileName)
@@ -50,7 +50,7 @@ const handler = async (
         ? new Date(end)
         : addMinutes(new Date(), Number.parseFloat(end)),
       offset: 0,
-      outputFolder,
+      outputFolder: OUTPUT_FOLDER,
       outputName: fileName,
       segmentLength: 5,
       start: isDateString(start)

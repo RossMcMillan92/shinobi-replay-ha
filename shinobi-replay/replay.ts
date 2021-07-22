@@ -14,13 +14,12 @@ import {
   secondsToMinutes,
   secondsToHours,
 } from "date-fns"
+import { getFormattedDate } from "./utils/dates"
 
 ffmpeg.setFfmpegPath(ffmpegPath)
 ffmpeg.setFfprobePath(ffprobePath)
 
 const DEFAULT_TARGET_VIDEO_DURATION = 4
-
-const getFormattedDate = (date: Date) => formatISO(date).split("+")[0]
 
 interface Video {
   end: string
@@ -62,7 +61,6 @@ const getReplay = ({
     )
     const startTime = getFormattedDate(startDate)
     const endTime = getFormattedDate(endDate)
-    const fileName = outputName || `${startTime}-${endTime}`
 
     const apiUrl = `${host}/${apiKey}/videos/${groupKey}/${monitorId}?end=${shiftedEndTime}&start=${shiftedStartTime}`
     console.log("apiUrl", apiUrl)
@@ -134,9 +132,9 @@ const getReplay = ({
         })
         .on("end", function () {
           console.log("Processing finished !")
-          resolve(`${outputFolder}${fileName}`)
+          resolve(`${outputFolder}${outputName}`)
         })
-        .mergeToFile(`${outputFolder}${fileName}`)
+        .mergeToFile(`/api/get-replay/${outputName}`)
     })
   })
 
