@@ -15,7 +15,7 @@ const web = {
   host: "http://192.168.86.12:8080",
   monitorId: "poolroom",
 }
-const outputFolder = "public/out/"
+const outputFolder = "out/"
 
 type Data = string | Buffer
 
