@@ -26,9 +26,7 @@ const ReplayButton = ({ length }: { length: number }) => {
     if (status === "loading") {
       const end = new Date()
       const start = subMinutes(end, length)
-      fetch(
-        `/api/create-replay/${getFormattedDate(start)}/${getFormattedDate(end)}`
-      )
+      fetch(`/api/create-replay/-${length}/${getFormattedDate(end)}`)
         .then((path) => {
           console.log("Video done", path)
           setStatus("idle")

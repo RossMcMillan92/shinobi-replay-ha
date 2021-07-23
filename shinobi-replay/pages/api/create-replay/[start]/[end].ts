@@ -2,6 +2,7 @@ import { addMinutes, isAfter } from "date-fns"
 import type { NextApiRequest, NextApiResponse } from "next"
 import getReplay from "../../../../replay"
 import { OUTPUT_FOLDER } from "../../../../settings"
+import { getFormattedDate } from "../../../../utils/dates"
 import { getFile } from "../../../../utils/fs"
 
 const isDateString = (s: string) =>
@@ -23,18 +24,27 @@ const handler = async (
   request: NextApiRequest,
   response: NextApiResponse<Data>
 ) => {
-  const { end, start } = request.query as { end: string; start: string }
+  const { end, start: initialStart } = request.query as {
+    end: string
+    start: string
+  }
+
+  if (!isDateString(initialStart) && !isValidNumber(initialStart))
+    return response.status(500).send("Start date is not valid.")
+  if (!isDateString(end))
+    return response.status(500).send("End date is not valid.")
+
+  const start = isDateString(initialStart)
+    ? initialStart
+    : getFormattedDate(
+        addMinutes(new Date(end), Number.parseFloat(initialStart))
+      )
   const fileName = `${start}-${end}.mp4`
+  console.log("🚀 ~ file: [end].ts ~ line 32 ~ fileName", fileName)
   const fullFileName = `${OUTPUT_FOLDER}${fileName}`
   const { data: video, error: ve } = await getFile(fullFileName)
 
   if (video && !cache[fullFileName]) return response.send(fullFileName)
-
-  if (!isDateString(start) && !isValidNumber(start))
-    return response.status(500).send("Start date is not valid.")
-
-  if (!isDateString(end) && !isValidNumber(end))
-    return response.status(500).send("End date is not valid.")
 
   if (
     isDateString(start) &&
@@ -46,16 +56,14 @@ const handler = async (
   const getReplayPromise =
     cache[fullFileName] ??
     getReplay({
-      end: isDateString(end)
-        ? new Date(end)
-        : addMinutes(new Date(), Number.parseFloat(end)),
+      end: new Date(end),
       offset: 0,
       outputFolder: OUTPUT_FOLDER,
       outputName: fileName,
       segmentLength: 5,
       start: isDateString(start)
         ? new Date(start)
-        : addMinutes(new Date(), Number.parseFloat(start)),
+        : addMinutes(new Date(end), Number.parseFloat(start)),
       web,
     })
   cache[fullFileName] = getReplayPromise
