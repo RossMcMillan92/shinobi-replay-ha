@@ -24,16 +24,17 @@ const handler = async (
   request: NextApiRequest,
   response: NextApiResponse<Data>
 ) => {
-  const { end, start: initialStart } = request.query as {
+  const { end: initialEnd, start: initialStart } = request.query as {
     end: string
     start: string
   }
 
   if (!isDateString(initialStart) && !isValidNumber(initialStart))
     return response.status(500).send("Start date is not valid.")
-  if (!isDateString(end))
+  if (!isDateString(initialEnd) && initialEnd !== "0")
     return response.status(500).send("End date is not valid.")
 
+  const end = initialEnd === "0" ? getFormattedDate(new Date()) : initialEnd
   const start = isDateString(initialStart)
     ? initialStart
     : getFormattedDate(
