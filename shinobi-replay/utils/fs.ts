@@ -4,12 +4,12 @@ import path from "path"
 export const getFile = (
   path: string
 ): Promise<{ data?: Buffer; error?: Error }> =>
-  new Promise((resolve, reject) => {
+  new Promise((resolve, reject) =>
     readFile(path, {}, (error, data) => {
       if (error) return reject(error)
       if (data) return resolve(data)
     })
-  })
+  )
     .then((data) => ({ data: data as Buffer }))
     .catch((error) => ({ error }))
 

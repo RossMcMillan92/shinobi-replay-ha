@@ -109,7 +109,7 @@ const getReplay = ({
       )
 
     getVideos().then((videos) => {
-      const vid = ffmpeg()
+      const vid = ffmpeg({ preset: "ultrafast" })
       const earliestVideo = videos[0]
       const earliestStartTime = new Date(earliestVideo.time)
       const startTimeString = getDiffTimeString(startTime, earliestStartTime)
