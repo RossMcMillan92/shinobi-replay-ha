@@ -1,7 +1,7 @@
 import { addMinutes, isAfter } from "date-fns"
 import type { NextApiRequest, NextApiResponse } from "next"
-import getReplay from "../../../../replay"
-import { OUTPUT_FOLDER } from "../../../../settings"
+import getReplay from "../../../../../replay"
+import { OUTPUT_FOLDER } from "../../../../../settings"
 import { getFormattedDate } from "../../../../utils/dates"
 import { getFile } from "../../../../utils/fs"
 
@@ -24,6 +24,7 @@ const handler = async (
   request: NextApiRequest,
   response: NextApiResponse<Data>
 ) => {
+  console.time("Video")
   const { end: initialEnd, start: initialStart } = request.query as {
     end: string
     start: string
@@ -41,7 +42,6 @@ const handler = async (
         addMinutes(new Date(end), Number.parseFloat(initialStart))
       )
   const fileName = `${start}-${end}.mp4`
-  console.log("🚀 ~ file: [end].ts ~ line 32 ~ fileName", fileName)
   const fullFileName = `${OUTPUT_FOLDER}${fileName}`
   const { data: video, error: ve } = await getFile(fullFileName)
 

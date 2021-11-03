@@ -2,7 +2,7 @@ import { subMinutes } from "date-fns/esm"
 import { GetServerSideProps } from "next"
 import React from "react"
 import { getFormattedDate } from "../utils/dates"
-import { OUTPUT_FOLDER } from "../settings"
+import { OUTPUT_FOLDER } from "../../settings"
 import { readDirectory } from "../utils/fs"
 
 const IndexRoute = ({ videos }: { videos: string[] }) => (

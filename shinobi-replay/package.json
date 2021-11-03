@@ -6,27 +6,33 @@
   },
   "dependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
-    "@ffprobe-installer/ffprobe": "^1.1.0",
-    "@types/node": "^16.3.3",
-    "@types/ramda": "^0.27.44",
-    "date-fns": "^2.22.1",
-    "esbuild": "^0.12.15",
+    "@ffprobe-installer/ffprobe": "^1.2.0",
+    "@types/node": "^16.10.3",
+    "@types/ramda": "^0.27.45",
+    "@types/video.js": "^7.3.27",
+    "autoprefixer": "^10.4.0",
+    "date-fns": "^2.25.0",
+    "esbuild": "^0.13.4",
     "express": "^4.17.1",
-    "fastify": "^3.19.0",
+    "fastify": "^3.22.0",
     "ffmpeg": "^0.0.4",
     "ffprobe": "^1.1.2",
     "fluent-ffmpeg": "^2.1.2",
     "isomorphic-unfetch": "^3.1.0",
-    "next": "^11.0.1",
+    "next": "^12.0.2",
     "next-transpile-modules": "^8.0.0",
+    "postcss": "^8.3.11",
     "ramda": "^0.27.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "typescript": "^4.3.5"
+    "sass": "^1.43.4",
+    "tailwindcss": "^2.2.19",
+    "typescript": "^4.4.4",
+    "video.js": "^7.15.4"
   },
   "devDependencies": {
     "@types/ffmpeg-installer__ffmpeg": "^1.0.0",
     "@types/fluent-ffmpeg": "^2.1.18",
-    "@types/react": "^17.0.14"
+    "@types/react": "^17.0.27"
   }
 }

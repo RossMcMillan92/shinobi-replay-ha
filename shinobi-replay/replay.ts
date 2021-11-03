@@ -14,7 +14,7 @@ import {
   secondsToMinutes,
   secondsToHours,
 } from "date-fns"
-import { getFormattedDate } from "./utils/dates"
+import { getFormattedDate } from "./src/utils/dates"
 
 ffmpeg.setFfmpegPath(ffmpegPath)
 ffmpeg.setFfprobePath(ffprobePath)
@@ -109,6 +109,8 @@ const getReplay = ({
       )
 
     getVideos().then((videos) => {
+      console.time("Time taken")
+
       const vid = ffmpeg({ preset: "ultrafast" })
       const earliestVideo = videos[0]
       const earliestStartTime = new Date(earliestVideo.time)
@@ -132,6 +134,8 @@ const getReplay = ({
         })
         .on("end", function () {
           console.log("Processing finished !")
+          console.timeEnd("Time taken")
+
           resolve(`/api/get-replay/${outputName}`)
         })
         .mergeToFile(`${outputFolder}${outputName}`)

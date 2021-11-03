@@ -1,7 +1,7 @@
 import { addMinutes, isAfter } from "date-fns"
 import type { NextApiRequest, NextApiResponse } from "next"
-import getReplay from "../../../replay"
-import { OUTPUT_FOLDER } from "../../../settings"
+import getReplay from "../../../../replay"
+import { OUTPUT_FOLDER } from "../../../../settings"
 import { getFile } from "../../../utils/fs"
 import fs from "fs"
 

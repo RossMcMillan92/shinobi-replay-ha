@@ -1,6 +1,6 @@
 import { addMinutes, isAfter, isValid, parseISO } from "date-fns"
 import { FastifyReply, FastifyRequest } from "fastify"
-import { getFile } from "./utils/fs"
+import { getFile } from "./src/utils/fs"
 import getReplay from "./replay"
 
 const fastify = require("fastify")({ logger: true })
